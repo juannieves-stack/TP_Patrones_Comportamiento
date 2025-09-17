@@ -1,7 +1,5 @@
-import ChainResponsability.HandlerTutorias;
-import ChainResponsability.RevisionAsistente;
-import ChainResponsability.RevisionCoordinador;
-import ChainResponsability.RevisionProfesor;
+import ChainResponsability.*;
+import Command.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,5 +11,19 @@ public class Main {
         intermedio.setNext(experto);
         basico.handle("consulta simple", 1);
         basico.handle("consulta compleja", 3);
+
+        System.out.println("\n----------Prueba patron Chain Responsability----------");
+        Alumno alumno = new Alumno();
+        Command inscribirse = new InscribirseCursoCommand(alumno);
+        Command abandonar = new AbandonarCursoCommand(alumno);
+        Command solicitarCertificado = new SolicitarCertificadoCommand(alumno);
+        Invoker remote = new Invoker();
+        remote.setCommand(inscribirse);
+        remote.ejecutar();
+        remote.setCommand(abandonar);
+        remote.ejecutar();
+        remote.setCommand(solicitarCertificado);
+        remote.ejecutar();
+
     }
 }
